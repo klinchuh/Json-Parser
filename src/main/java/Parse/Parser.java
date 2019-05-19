@@ -2,6 +2,7 @@ package Parse;
 
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
@@ -76,15 +77,12 @@ public class Parser {
 
 
         for(ArrayList<String> nextLine: lineArray) {
-            System.out.println(nextLine.size());
             int idx = 0;
             for(; idx < Integer.min(nextLine.size() - 1, objectsStack.size()); idx++) {
                 if(!nextLine.get(idx).equals(objectsStack.get(idx).getLayerName())) {
                     break;
                 }
             }
-
-            System.out.println(idx);
 
             while(objectsStack.size() > 1 && objectsStack.size() > idx) {
                 objectsStack.get(objectsStack.size() - 2).getLayerObject().put(
@@ -111,7 +109,10 @@ public class Parser {
                 objectsStack.get(objectsStack.size() - 1).getLayerObject().put("value", nextLine.get(nextLine.size() - 1));
             }
         }
-
-        System.out.println(total.toString());
+        try {
+            out.write(total.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,10 +2,7 @@ package Main;
 
 import Parse.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 public class ConsoleApplication {
 
@@ -19,9 +16,20 @@ public class ConsoleApplication {
             return;
         }
 
+        File outFile, inFile;
+
+        inFile = new File(args[0]);
+
+        if(args.length < 2) {
+            outFile = new File("out.txt");
+        }  else {
+            outFile = new File(args[1]);
+        }
+
+        System.out.println("Read from \"" + inFile.getAbsolutePath() + "\" and parse to \"" + outFile.getAbsolutePath() + "\"");
+
         try {
-            parser.get(ConsoleApplication.class.getClassLoader().getResourceAsStream(args[0])
-                    , new FileOutputStream(new File("out.txt")));
+            parser.get(new FileInputStream(inFile), new FileOutputStream(outFile));
         } catch (IOException e) {
             e.printStackTrace();
         }

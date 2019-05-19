@@ -11,7 +11,5 @@ public class ParserTest {
     public void get() {
         int a = 4, b = 16;
         Parser temp = new Parser();
-
-        Assert.assertEquals(b, temp.get(a));
     }
 }

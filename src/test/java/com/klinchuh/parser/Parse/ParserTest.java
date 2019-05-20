@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 
 import java.io.ByteArrayInputStream;
@@ -11,36 +12,49 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+
 public class ParserTest {
     private String input;
     private String output;
     private JSONParser jsonSimpleParser;
+    private Boolean withoutAnswer;
 
     @Before
     public void  preLoad() {
         jsonSimpleParser = new JSONParser();
         input = "";
         output = "{}";
+        withoutAnswer = false;
     }
 
     @After
     public void prcTest() {
         InputStream is = new ByteArrayInputStream(input.getBytes());
         OutputStream os = new ByteArrayOutputStream();
-
         Parser parser = new Parser();
-        try {
-            JSONObject b = (JSONObject)jsonSimpleParser.parse(output);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        parser.get(is, os);
-        try {
-            JSONObject b = (JSONObject)jsonSimpleParser.parse(os.toString());
-            JSONObject a = (JSONObject)jsonSimpleParser.parse(output);
-            Assert.assertEquals(a, b);
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        if(withoutAnswer)  {
+            parser.get(is, os);
+            try {
+                JSONObject b = (JSONObject) jsonSimpleParser.parse(os.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Assert.fail("Not correct output JSON file");
+            }
+        } else {
+            try {
+                JSONObject b = (JSONObject) jsonSimpleParser.parse(output);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            parser.get(is, os);
+            try {
+                JSONObject b = (JSONObject) jsonSimpleParser.parse(os.toString());
+                JSONObject a = (JSONObject) jsonSimpleParser.parse(output);
+                Assert.assertEquals(a, b);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -135,7 +149,8 @@ public class ParserTest {
         StringBuilder stringBuilder = new StringBuilder(), total = new StringBuilder();
         for(int i = 0; i < 2000; i++) {
             stringBuilder.append("a");
-            total.append(stringBuilder.toString() + "=1\n");
+            total.append(stringBuilder);
+            total.append("=1\n");
             stringBuilder.append(".");
         }
         input = total.toString();
@@ -156,5 +171,36 @@ public class ParserTest {
 
         stringBuilder.append("}");
         output = stringBuilder.toString();
+    }
+
+    @Test
+    public void getFewWithoutAns1() {
+        input = "===============";
+        withoutAnswer = true;
+    }
+    @Test
+    public void getFewWithoutAns2() {
+        input = "v.fv.fv.f=fv.fv.fv-fvvfvf=fv=fv=1";
+        withoutAnswer = true;
+    }
+    @Test
+    public void getFewWithoutAns3() {
+        input = "..................";
+        withoutAnswer = true;
+    }
+    @Test
+    public void getFewWithoutAns4() {
+        input = "..................=2";
+        withoutAnswer = true;
+    }
+    @Test
+    public void getFewWithoutAns5() {
+        input = ".==.=.=..=.=.=.=.=.=.=.";
+        withoutAnswer = true;
+    }
+    @Test
+    public void getFewWithoutAns6() {
+        input = "cdfgnmhgfdsfgnhbvcd=...........";
+        withoutAnswer = true;
     }
 }

@@ -1,6 +1,6 @@
-package Main;
+package com.klinchuh.parser.Main;
 
-import Parse.*;
+import com.klinchuh.parser.Parse.*;
 
 import java.io.*;
 
@@ -21,7 +21,7 @@ public class ConsoleApplication {
         inFile = new File(args[0]);
 
         if(args.length < 2) {
-            outFile = new File("out.txt");
+            outFile = new File("out.json");
         }  else {
             outFile = new File(args[1]);
         }

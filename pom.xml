@@ -27,7 +27,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main.ConsoleApplication</mainClass>
+                            <mainClass>com.klinchuh.parser.Main.ConsoleApplication</mainClass>
                             <classpathPrefix>libs/</classpathPrefix>
                             <addClasspath>true</addClasspath>
                         </manifest>
@@ -69,7 +69,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        Main.ConsoleApplication
+                                        com.klinchuh.parser.Main.ConsoleApplication
                                     </mainClass>
                                 </manifest>
                             </archive>

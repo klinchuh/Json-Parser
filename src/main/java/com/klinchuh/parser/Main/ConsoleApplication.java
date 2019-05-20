@@ -29,7 +29,7 @@ public class ConsoleApplication {
         System.out.println("Read from \"" + inFile.getAbsolutePath() + "\" and parse to \"" + outFile.getAbsolutePath() + "\"");
 
         try {
-            parser.get(new FileInputStream(inFile), new FileOutputStream(outFile));
+            parser.convertToJSON(new FileInputStream(inFile), new FileOutputStream(outFile));
         } catch (IOException e) {
             e.printStackTrace();
         }

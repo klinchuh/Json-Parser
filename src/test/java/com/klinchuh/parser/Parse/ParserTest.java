@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.*;
-import org.junit.rules.ExpectedException;
 
 
 import java.io.ByteArrayInputStream;
@@ -34,7 +33,7 @@ public class ParserTest {
         Parser parser = new Parser();
 
         if(withoutAnswer)  {
-            parser.get(is, os);
+            parser.convertToJSON(is, os);
             try {
                 JSONObject b = (JSONObject) jsonSimpleParser.parse(os.toString());
             } catch (ParseException e) {
@@ -47,7 +46,7 @@ public class ParserTest {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            parser.get(is, os);
+            parser.convertToJSON(is, os);
             try {
                 JSONObject b = (JSONObject) jsonSimpleParser.parse(os.toString());
                 JSONObject a = (JSONObject) jsonSimpleParser.parse(output);
@@ -125,7 +124,7 @@ public class ParserTest {
     @Test
     public void getFewElement4() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < 1999; i++) {
+        for(int i = 0; i < 999; i++) {
             stringBuilder.append("a.");
         }
         stringBuilder.append("a = 23");
@@ -134,11 +133,11 @@ public class ParserTest {
         stringBuilder.delete(0, stringBuilder.length());
 
         stringBuilder.append("{");
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 1000; i++) {
             stringBuilder.append("\"a\":{");
         }
         stringBuilder.append("\"value\":\"23\"");
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 1000; i++) {
             stringBuilder.append("}");
         }
         stringBuilder.append("}");
@@ -147,7 +146,7 @@ public class ParserTest {
     @Test
     public void getFewElement5() {
         StringBuilder stringBuilder = new StringBuilder(), total = new StringBuilder();
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 1000; i++) {
             stringBuilder.append("a");
             total.append(stringBuilder);
             total.append("=1\n");
@@ -157,15 +156,15 @@ public class ParserTest {
         stringBuilder.delete(0, stringBuilder.length());
 
         stringBuilder.append("{");
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 1000; i++) {
             stringBuilder.append("\"a\":{");
-            if(i != 1999) {
+            if(i != 999) {
                 stringBuilder.append("\"value\":\"1\",");
             } else {
                 stringBuilder.append("\"value\":\"1\"");
             }
         }
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 1000; i++) {
             stringBuilder.append("}");
         }
 

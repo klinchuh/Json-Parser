@@ -15,8 +15,7 @@ public class Parser {
         lineArray = new ArrayList<>();
     }
 
-    public void get(InputStream is, OutputStream os) {
-        StringBuilder sbld;
+    public void convertToJSON(InputStream is, OutputStream os) {
         JSONObject total = new JSONObject();
         ArrayList <Layer> objectsStack = new ArrayList<>();
         lineArray = parseInputToSortedLines(is);
